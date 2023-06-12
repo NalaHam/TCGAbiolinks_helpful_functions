@@ -1,0 +1,25 @@
+#get the packages
+if (!require("BiocManager", quietly = TRUE))
+  install.packages("BiocManager")
+
+BiocManager::install("TCGAbiolinks")
+
+library(TCGAbiolinks)
+library(dplyr)
+
+#download clinical data for COAD
+clin <- GDCquery_clinic("TCGA-COAD", 
+                        type = "clinical", 
+                        save.csv = FALSE)
+                        
+#know what data types are availble for a project
+getDataCategorySummary("TCGA-COAD") #gives Biospecimen, Clinical, Copy Number Variation, 
+                                    #DNA Methylation, Proteome Profiling, Sequencing Reads, 
+                                    #Simple Nucleotide Variation, Structural Variation, Transcriptome Profiling
+#get Omics data
+COAD_omics <- getLinkedOmicsData("TCGA-COADREAD", "RNAseq (GA, Gene level)") 
+
+#refer back to getLinkedOmicsData in here: https://www.bioconductor.org/packages/devel/bioc/manuals/TCGAbiolinks/man/TCGAbiolinks.pdf
+
+
+
